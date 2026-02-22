@@ -1,19 +1,19 @@
-import Hero from "@/components/Hero";
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
 import ProblemSection from "@/components/ProblemSection";
-import Benefits from "@/components/Benefits";
+import SolutionSection from "@/components/SolutionSection";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main>
-
-      <h1 className="text-3xl font-bold text-center mt-20">Página en construcción</h1>
-      {/* <Hero />
+    <>
+      <Navbar />
+      <HeroSection />
       <ProblemSection />
-      <Benefits />
+      <SolutionSection />
       <FinalCTA />
-      <Footer /> */}
-    </main>
+      <Footer />
+    </>
   );
 }

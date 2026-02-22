@@ -1,6 +1,9 @@
-// tailwind.config.js
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx}"],
+  content: [
+    "./src/app/**/*.{js,jsx}",
+    "./src/components/**/*.{js,jsx}",
+  ],
   theme: {
     extend: {
       colors: {
@@ -14,14 +17,8 @@ module.exports = {
         display: ["Manrope", "sans-serif"],
         serif: ["Playfair Display", "serif"],
       },
-      borderRadius: {
-        DEFAULT: "0.25rem",
-        md: "0.375rem",
-        lg: "0.5rem",
-        xl: "0.75rem",
-        full: "9999px",
-      },
     },
   },
-  plugins: [require("@tailwindcss/forms")],
+  darkMode: "class",
+  plugins: [],
 };
