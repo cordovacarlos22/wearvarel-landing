@@ -1,44 +1,73 @@
+"use client";
+
+import Image from "next/image";
+import { useLocale } from "@/components/LocaleProvider";
+
 export default function Navbar() {
+  const { locale, setLocale, t } = useLocale();
+
+  const toggleLocale = () => {
+    setLocale(locale === "en" ? "es" : "en");
+  };
+
+  // Safe fallback por si t/nav no existen todavía
+  const joinText =
+    t?.nav?.join ?? (locale === "es" ? "Únete a la lista" : "Join the list");
+
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-gray-100 dark:border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-gray-100">
+      <div className="max-w-[1280px] mx-auto px-6">
         <div className="flex justify-between items-center h-20">
-          <div className="hidden sm:flex gap-4 w-1/3">
+          {/* Left: Logo */}
+          <a href="#top" className="flex items-center">
+            <Image
+              src="/logo-horizontal.png"
+              alt="VAREL"
+              width={160}
+              height={44}
+              priority
+              className="h-full w-auto"
+            />
+          </a>
+
+          {/* Right */}
+          <div className="flex items-center gap-4">
+            {/* Join anchor */}
             <a
-              className="text-primary/60 hover:text-primary dark:text-white/60 dark:hover:text-white transition-colors"
-              href="/"
+              href="#join"
+              className="text-sm font-semibold text-primary/70 hover:text-primary transition-colors"
             >
-              <span className="material-symbols-outlined text-[20px]">
-                public
-              </span>
+              {joinText}
             </a>
-          </div>
 
-          <div className="flex-1 flex justify-center w-1/3">
-            <h1 className="font-serif text-3xl font-bold tracking-widest text-primary dark:text-white">
-              VAREL
-            </h1>
-          </div>
+            {/* Language Toggle */}
+            <button
+              type="button"
+              onClick={toggleLocale}
+              className="px-3 py-2 rounded-full border border-gray-200 text-xs font-bold tracking-widest text-primary hover:bg-gray-50 transition-colors"
+              aria-label="Toggle language"
+              title="Toggle language"
+            >
+              {(locale ?? "en").toUpperCase()}
+            </button>
 
-          <div className="flex justify-end items-center gap-3 w-1/3">
+            {/* Instagram */}
             <a
               href="https://www.instagram.com/wearvarel/"
               target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 text-primary dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-all duration-200"
+              rel="noreferrer"
+              className="w-10 h-10 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors"
+              aria-label="Instagram"
+              title="Instagram"
             >
-              <span className="sr-only">Instagram</span>
               <svg
-                aria-hidden="true"
-                className="w-5 h-5"
-                fill="currentColor"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
               >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm9 2h-9A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4Zm-4.5 4a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Zm0 2a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Zm5.25-2.25a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Z"
-                />
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
               </svg>
             </a>
           </div>
