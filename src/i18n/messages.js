@@ -7,6 +7,13 @@ export const messages = {
       join: "Join the list",
       comingSoon: "COMING SOON",
     },
+    toast: {
+      loading: "Securing your access…",
+      successTitle: "Welcome to VAREL.",
+      successDesc: "Authentic brands. Smart pricing. Always.",
+      errorTitle: "Something went wrong",
+      errorDesc: "Please try again.",
+    },
 
     hero: {
       badge: "COMING SOON",
@@ -114,6 +121,14 @@ export const messages = {
       facebookUrl:
         "https://www.facebook.com/people/Varel/61550473701224/",
     },
+    thanksToast: {
+      successTitle: "You're in!",
+      successDesc: "Redirecting…",
+      errorTitle: "Something went wrong",
+      errorDesc: "Please try again.",
+      networkTitle: "Network error",
+      networkDesc: "Try again in a moment.",
+    },
   },
 
   es: {
@@ -122,7 +137,13 @@ export const messages = {
       join: "Únete a la lista",
       comingSoon: "PRÓXIMAMENTE",
     },
-
+    toast: {
+      loading: "Asegurando tu acceso…",
+      successTitle: "Bienvenido a VAREL.",
+      successDesc: "Marcas auténticas. Precio inteligente. Siempre.",
+      errorTitle: "Algo salió mal",
+      errorDesc: "Inténtalo nuevamente.",
+    },
     hero: {
       badge: "PRÓXIMAMENTE",
       titleTop: "MODA ORIGINAL.",
@@ -228,6 +249,14 @@ export const messages = {
       facebookLabel: "Facebook",
       facebookUrl:
         "https://www.facebook.com/people/Varel/61550473701224/",
+    },
+    thanksToast: {
+      successTitle: "¡Listo!",
+      successDesc: "Redirigiendo…",
+      errorTitle: "Algo salió mal",
+      errorDesc: "Inténtalo de nuevo.",
+      networkTitle: "Error de red",
+      networkDesc: "Inténtalo en un momento.",
     },
   },
 };

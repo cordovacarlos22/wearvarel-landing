@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useLocale } from "@/components/LocaleProvider";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
+import { sileo } from "sileo";
 const HERO_IMAGE =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuByjDmIPoni_jEkFgpnMdlhEf-aFc4uM1xpKZ2VHw8K5VJjGT3R_nNErzk7Wq5GinCUOzjIRlYsvsby9NmTfYkwIqzzrhPqanNCvdh5wFMWz6dqFhXJtwF2wEB88rb36_3n0cTasZTLn-KUeiK2vwJJYFRAxi_GGUUL82maj_IoSBK_o_EV7CdQiVT9a-cTHcjX6Kq6ixeSNLSRmEPO0IMuwsR0uKqrH7Z5IaLZNGvc-3v8bJGbqFvFB55K35ex3t6kMuWXW-jqAU8";
 
@@ -115,29 +115,47 @@ function WaitlistForm() {
   });
 
   const onSubmit = async (data) => {
-    try {
-      setErrorMsg("");
+    const email = (data.email || "").trim();
+    const whatsapp = (data.whatsapp || "").trim();
 
-      const res = await fetch("/api/early-access", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: (data.email || "").trim(),
-          whatsapp: (data.whatsapp || "").trim(),
-        }),
-      });
-
-      if (res.ok) {
-        reset();
-        router.push("/thanks-for-signing-up");
-        return;
+    const request = fetch("/api/early-access", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, whatsapp }),
+    }).then(async (res) => {
+      if (!res.ok) {
+        const payload = await res.json().catch(() => ({}));
+        throw new Error(payload?.message || payload?.error || "Failed");
       }
+      return res.json();
+    });
 
-      const payload = await res.json().catch(() => ({}));
-      setErrorMsg(payload?.error || "Something went wrong.");
-    } catch (err) {
-      setErrorMsg("Network error. Please try again.");
-    }
+    sileo.promise(request, {
+      loading: {
+        title: t?.toast?.loading ?? "Securing your access…",
+      },
+      success: {
+        title: t?.toast?.successTitle ?? "Welcome to VAREL.",
+        description:
+          t?.toast?.successDesc ??
+          "Authentic brands. Smart pricing. Always.",
+      },
+      error: {
+        title: t?.toast?.errorTitle ?? "Something went wrong",
+        description:
+          t?.toast?.errorDesc ??
+          "Please try again.",
+      },
+    });
+
+    try {
+      await request;
+      reset();
+
+      setTimeout(() => {
+        router.push("/thanks-for-signing-up");
+      }, 1000);
+    } catch { }
   };
 
   return (

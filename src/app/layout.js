@@ -3,7 +3,7 @@ import Script from "next/script";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { LocaleProvider } from "@/components/LocaleProvider";
-
+import { Toaster } from "sileo";
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
@@ -110,7 +110,7 @@ export default function RootLayout({ children }) {
 
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <LocaleProvider defaultLocale="en">{children}</LocaleProvider>
-
+        <Toaster position="top-right" />
         {/* Structured data (USA focus) */}
         <Script
           id="ld-json"
