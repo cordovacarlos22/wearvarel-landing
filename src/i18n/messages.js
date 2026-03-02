@@ -1,4 +1,5 @@
 // src/i18n/messages.js
+
 export const messages = {
   en: {
     nav: {
@@ -92,12 +93,26 @@ export const messages = {
       disclaimer: "No spam. Unsubscribe anytime.",
     },
 
+    thanks: {
+      titleLine1: "THANK YOU FOR",
+      titleLine2: "SUBSCRIBING.",
+      desc:
+        "You’ve been added to our exclusive list. You’ll be the first to know when we officially launch.",
+      back: "BACK TO HOME",
+      follow: "Follow our story",
+      imageEyebrow: "COLLECTION 01",
+      imageTitle: "Coming soon",
+    },
+
     footer: {
       tagline: "Smart fashion. Quality, style, fair pricing.",
       rights: "© 2026 VAREL. All rights reserved.",
       follow: "Follow",
-      instagram: "Instagram",
-      facebook: "Facebook",
+      instagramLabel: "Instagram",
+      instagramUrl: "https://www.instagram.com/varel.official/",
+      facebookLabel: "Facebook",
+      facebookUrl:
+        "https://www.facebook.com/people/Varel/61550473701224/",
     },
   },
 
@@ -193,12 +208,26 @@ export const messages = {
       disclaimer: "Cero spam. Puedes salirte cuando quieras.",
     },
 
+    thanks: {
+      titleLine1: "GRACIAS POR",
+      titleLine2: "REGISTRARTE.",
+      desc:
+        "Te hemos añadido a nuestra lista exclusiva. Serás el primero en recibir una notificación cuando lancemos oficialmente.",
+      back: "VOLVER AL INICIO",
+      follow: "Sigue nuestra historia",
+      imageEyebrow: "COLECCIÓN 01",
+      imageTitle: "Próximamente",
+    },
+
     footer: {
       tagline: "Moda inteligente. Calidad, estilo y precio justo.",
       rights: "© 2026 VAREL. Todos los derechos reservados.",
       follow: "Síguenos",
-      instagram: "Instagram",
-      facebook: "Facebook",
+      instagramLabel: "Instagram",
+      instagramUrl: "https://www.instagram.com/varel.official/",
+      facebookLabel: "Facebook",
+      facebookUrl:
+        "https://www.facebook.com/people/Varel/61550473701224/",
     },
   },
 };

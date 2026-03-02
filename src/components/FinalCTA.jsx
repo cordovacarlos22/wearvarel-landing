@@ -2,9 +2,13 @@
 
 import { useForm } from "react-hook-form";
 import { useLocale } from "@/components/LocaleProvider";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function FinalCTA() {
   const { t } = useLocale();
+  const router = useRouter();
+  const [errorMsg, setErrorMsg] = useState("");
 
   const {
     register,
@@ -16,8 +20,29 @@ export default function FinalCTA() {
   });
 
   const onSubmit = async (data) => {
-    console.log("Final CTA lead:", data);
-    reset();
+    try {
+      setErrorMsg("");
+
+      const res = await fetch("/api/early-access", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: (data.email || "").trim(),
+          whatsapp: (data.whatsapp || "").trim(),
+        }),
+      });
+
+      if (res.ok) {
+        reset();
+        router.push("/thanks-for-signing-up");
+        return;
+      }
+
+      const payload = await res.json().catch(() => ({}));
+      setErrorMsg(payload?.error || "Something went wrong.");
+    } catch (err) {
+      setErrorMsg("Network error. Please try again.");
+    }
   };
 
   return (
@@ -43,10 +68,7 @@ export default function FinalCTA() {
           {/* Right form card */}
           <div className="lg:col-span-6">
             <div className="bg-white border border-gray-100 rounded-2xl shadow-xl p-8 sm:p-10">
-              <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="grid grid-cols-1 gap-4"
-              >
+              <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-1 gap-4">
                 {/* Email */}
                 <div>
                   <label className="block text-sm font-semibold text-primary mb-2">
@@ -103,6 +125,8 @@ export default function FinalCTA() {
                 <p className="text-xs text-gray-500 mt-2">
                   {t?.final?.disclaimer ?? "No spam. Unsubscribe anytime."}
                 </p>
+
+                {errorMsg ? <p className="text-xs text-red-600">{errorMsg}</p> : null}
               </form>
             </div>
           </div>

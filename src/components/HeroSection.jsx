@@ -2,6 +2,8 @@
 
 import { useForm } from "react-hook-form";
 import { useLocale } from "@/components/LocaleProvider";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const HERO_IMAGE =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuByjDmIPoni_jEkFgpnMdlhEf-aFc4uM1xpKZ2VHw8K5VJjGT3R_nNErzk7Wq5GinCUOzjIRlYsvsby9NmTfYkwIqzzrhPqanNCvdh5wFMWz6dqFhXJtwF2wEB88rb36_3n0cTasZTLn-KUeiK2vwJJYFRAxi_GGUUL82maj_IoSBK_o_EV7CdQiVT9a-cTHcjX6Kq6ixeSNLSRmEPO0IMuwsR0uKqrH7Z5IaLZNGvc-3v8bJGbqFvFB55K35ex3t6kMuWXW-jqAU8";
@@ -93,17 +95,15 @@ export default function HeroSection() {
   );
 }
 
+
 function WaitlistForm() {
   const { t } = useLocale();
+  const router = useRouter();
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const emailPlaceholder =
-    t?.hero?.emailPlaceholder ?? "Email address";
-
-  const whatsappPlaceholder =
-    t?.hero?.whatsappPlaceholder ?? "WhatsApp (Optional)";
-
-  const cta =
-    t?.hero?.cta ?? "I WANT EARLY ACCESS";
+  const emailPlaceholder = t?.hero?.emailPlaceholder ?? "Email address";
+  const whatsappPlaceholder = t?.hero?.whatsappPlaceholder ?? "WhatsApp (Optional)";
+  const cta = t?.hero?.cta ?? "I WANT EARLY ACCESS";
 
   const {
     register,
@@ -115,8 +115,29 @@ function WaitlistForm() {
   });
 
   const onSubmit = async (data) => {
-    console.log("Waitlist lead:", data);
-    reset();
+    try {
+      setErrorMsg("");
+
+      const res = await fetch("/api/early-access", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: (data.email || "").trim(),
+          whatsapp: (data.whatsapp || "").trim(),
+        }),
+      });
+
+      if (res.ok) {
+        reset();
+        router.push("/thanks-for-signing-up");
+        return;
+      }
+
+      const payload = await res.json().catch(() => ({}));
+      setErrorMsg(payload?.error || "Something went wrong.");
+    } catch (err) {
+      setErrorMsg("Network error. Please try again.");
+    }
   };
 
   return (
@@ -160,6 +181,11 @@ function WaitlistForm() {
       >
         {isSubmitting ? "..." : cta}
       </button>
+
+      {errorMsg ? (
+        <p className="sm:col-span-5 text-xs text-red-600 mt-1">{errorMsg}</p>
+      ) : null}
     </form>
   );
 }
+
