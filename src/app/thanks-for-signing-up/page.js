@@ -2,7 +2,7 @@
 
 import { useLocale } from "@/components/LocaleProvider";
 import Link from "next/link";
-
+import Image from "next/image";
 const HERO_IMAGE =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuCuKpW0kNGKl5KulPYUJwZ5_C-1ayz3HqK8MemU_P6PTyDqvVmWat34yr3iACry29NCCaMs3sf53AZfEdkHqu4S5vSQ4VR6vAmTdxxPkgVQTGBjM66TkZbUO-Hw8hTvaC30ifmXdOnfw0spxJDWMLmJrq5NaU-WgYw0p-wmkmv9IkQCUsvUhL5s8tibn8TE7n1ngd3VSsueQpSLbPqRGtQgkKhiC5MQmsrA0wqtqNxDVvtqLULhoVx_w6uXCJsjfywplYk0Y2KqOqs";
 
@@ -28,12 +28,16 @@ export default function ThanksPage() {
         {/* Header */}
         <header className="flex items-center px-6 py-6 lg:px-12 lg:py-8">
           <div className="flex items-center gap-2 cursor-pointer">
-            <span className="material-symbols-outlined text-[28px] font-light">
-              diamond
-            </span>
-            <h2 className="text-xl font-bold tracking-[0.2em] leading-none">
-              VAREL
-            </h2>
+            <a href="/" className="flex items-center">
+                        <Image
+                          src="/logo-horizontal.png"
+                          alt="VAREL"
+                          width={160}
+                          height={44}
+                          priority
+                          className="h-full w-auto"
+                        />
+                      </a>
           </div>
         </header>
 
